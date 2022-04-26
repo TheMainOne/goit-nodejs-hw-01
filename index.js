@@ -17,19 +17,26 @@ const fileOperations = async ({ action, id, data }) => {
       const newContact = productsOperations.add(data);
       console.log(newContact);
       break;
+    case "updateById":
+      const updateContact = productsOperations.updateById(id, data);
+      if (!updateContact) {
+        throw new Error(`Contact with id=${id} not found`);
+      }
+      console.log(updateContact);
+      break;
     default:
       console.log("Unknown action");
   }
 };
 
 const newData = {
-  id: "11",
+  id: "10",
   name: "Maksym",
   email: "maksym@mail.com",
   phone: "(122) 123-5792",
 };
 // fileOperations({ action: "getAll" });
-fileOperations({ action: "add", data: newData });
+fileOperations({ action: "updateById", id: "10", data: newData });
 
 // console.log("fsfs");
 // fileOperations("./db/contacts.json", "add", "Hello world");

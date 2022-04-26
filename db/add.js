@@ -1,12 +1,12 @@
 const getAll = require("./getAll");
 const fs = require("fs/promises");
-const filePath = require("./filePath");
+const updateContacts = require("./updateContacts");
 
 const add = async (data) => {
-  const contacts = getAll();
+  const contacts = await getAll();
   const newContact = { ...data };
   contacts.push(newContact);
-  await fs.writeFile(filePath, JSON.stringify(contacts));
+  await updateContacts(contacts);
   return newContact;
 };
 
