@@ -7,7 +7,7 @@ const fileOperations = async ({ action, id, name, email, phone }) => {
       const contacts = await productsOperations.getAll();
       console.table(contacts);
       break;
-    case "getById":
+    case "get":
       const contact = await productsOperations.getById(id);
       if (!contact) {
         throw new Error(`Contact with id=${id} not found`);
