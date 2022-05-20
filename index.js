@@ -1,43 +1,43 @@
 const productsOperations = require("./db");
+const argv = require("yargs").argv;
 
-const fileOperations = async ({ action, id, data }) => {
+const fileOperations = async ({ action, id, name, email, phone }) => {
   switch (action) {
-    case "getAll":
+    case "list":
       const contacts = await productsOperations.getAll();
-      console.log(contacts);
+      console.table(contacts);
       break;
     case "getById":
       const contact = await productsOperations.getById(id);
       if (!contact) {
         throw new Error(`Contact with id=${id} not found`);
       }
-      console.log(contact);
+      console.table(contact);
       break;
     case "add":
-      const newContact = productsOperations.add(data);
+      const newContact = await productsOperations.add(name, email, phone);
       console.log(newContact);
       break;
     case "updateById":
-      const updateContact = productsOperations.updateById(id, data);
+      const updateContact = await productsOperations.updateById(
+        id,
+        name,
+        email,
+        phone
+      );
       if (!updateContact) {
         throw new Error(`Contact with id=${id} not found`);
       }
-      console.log(updateContact);
+      console.table(updateContact);
       break;
+    case "remove":
+      const removeContact = await productsOperations.removeById(id);
+      console.table(removeContact);
+      break;
+
     default:
-      console.log("Unknown action");
+      console.table("Unknown action");
   }
 };
 
-const newData = {
-  id: "10",
-  name: "Maksym",
-  email: "maksym@mail.com",
-  phone: "(122) 123-5792",
-};
-// fileOperations({ action: "getAll" });
-fileOperations({ action: "updateById", id: "10", data: newData });
-
-// console.log("fsfs");
-// fileOperations("./db/contacts.json", "add", "Hello world");
-// fileOperations("./db/contacts.json", "replace", "Hello world");
+fileOperations(argv);
