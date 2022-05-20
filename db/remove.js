@@ -4,7 +4,7 @@ const updateContacts = require("./updateContacts");
 
 const removeById = async (id) => {
   const contacts = await getAll();
-  const index = contacts.findIndex((item) => item.id === id);
+  const index = contacts.findIndex((item) => item.id === id.toString());
 
   if (index === -1) {
     return null;
